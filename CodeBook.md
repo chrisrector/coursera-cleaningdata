@@ -1,27 +1,30 @@
 ## Codebook for the Getting and Cleaning Data course project
 
-The data used in this project comes from this project:
+The data used in this project comes from this UCI project:
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
-Specifically the data was taken from this link:
+Specifically the source data files were taken from this zip file:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
 
-The run_analysis.R script takes the input data files and produces the output file tidymotiondata.txt through these steps:
+The data are motion data built by recording the daily movement of 30 test subjects who wore waist-mounted smartphones with embedded inertial sensors.
+
+The run_analysis.R script takes the input data files and produces the output file tidymotiondata.txt through the following steps. Note that the input data are divided into separate files (one test and one training set), plus there are several files that contain reference data. 
 * combining both train/X_train.txt and test/X_test.txt
-* selecting only the columns that are standard deviation or mean values
-* adding a descriptive activity value (e.g. "WALKING")
-* adding the subject (each participant was given a number from 1 to 30)
+* selecting only the columns that are standard deviation or mean values (based on descriptions in the features.txt file in the source data files)
+* adding a descriptive activity value (e.g. "WALKING"). Activity descriptions and their IDs are found in the activity_labels.txt file in the source data files.
+* adding the subject (each participant was given a number from 1 to 30). The subject IDs were taken from the subject.txt file in the test and train directories)
 * producing averages for each numeric value grouped by activity and subject
+* writing the output to a comma-delimited file tidymotiondata.txt.
 
 The activity column may contain the following values:
-WALKING
-WALKING_UPSTAIRS
-WALKING_DOWNSTAIRS
-SITTING
-STANDING
-LAYING
+* WALKING
+* WALKING_UPSTAIRS
+* WALKING_DOWNSTAIRS
+* SITTING
+* STANDING
+* LAYING
 
-Below are the colums found in tidymotiondata.csv. Note that all columns after activity and subject are averages of the underlying data in the test set.
+Below are the colums found in the tidymotiondata.txt output file. Note that all columns after activity and subject are averages of the underlying test and traingin data found in the source data files.
 
 * 1 activity
 * 2 subject
