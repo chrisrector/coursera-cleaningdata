@@ -17,29 +17,29 @@ testActivitiesFile = "test/y_test.txt"
 trainActivitiesFile = "train/y_train.txt"
 
 # the output file we'll generate in the working directory
-outFile = "tidymotiondata.csv"
+outFile = "tidymotiondata.txt"
 
 # first make sure files exist
-if (!exist(trainFile) | !exist(testFile)) {
-  stop(paste("Could not find both input files", trainFile, "and", testFile)
+if (!file.exists(trainFile) | !file.exists(testFile)) {
+  stop(paste("Could not find both input files", trainFile, "and", testFile))
 }
 
-if (!exist(testSubjectFile) | !exist(trainSubjectFile)) {
+if (!file.exists(testSubjectFile) | !file.exists(trainSubjectFile)) {
   stop(paste("Could not find both subject files", 
-             testSubjectFile, "and", trainSubjectFile)
+             testSubjectFile, "and", trainSubjectFile))
 }
 
-if (!exist(testActivitiesFile) | !exist(trainSubjectFile)) {
+if (!file.exists(testActivitiesFile) | !file.exists(trainSubjectFile)) {
   stop(paste("Could not find both activity files", 
-             testActivitiesFile, "and", trainSubjectFile)
+             testActivitiesFile, "and", trainSubjectFile))
 }
 
-if (!exist(activityLabelsFile)) {
-  stop(paste("Could not find activty labels file", activityLabelsFile)
+if (!file.exists(activityLabelsFile)) {
+  stop(paste("Could not find activty labels file", activityLabelsFile))
 }
 
-if (!exist(featureFile)) {
-  stop(paste("Could not find feature file", featureFile)
+if (!file.exists(featureFile)) {
+  stop(paste("Could not find feature file", featureFile))
 }
 
 print("reading in data files...")
@@ -82,6 +82,7 @@ trimmedData$subject <- allSubjects[,1]
 
 # now create the tidy data set containing the means of all the measurements,
 # grouped by activity and then subject
+print("creating tidy data set...")
 tidyData <- aggregate(trimmedData[,1:numRelevantCols], 
                       by=list(trimmedData$activity,trimmedData$subject), 
                       FUN=mean, na.rm=TRUE)
@@ -92,6 +93,7 @@ colnames(tidyData)[1] <- 'activity'
 colnames(tidyData)[2] <- 'subject'
 
 # now write the tidy data set to file, without row names
+print("writing tidy data to file...")
 write.csv(tidyData, file = outFile, row.names=FALSE)
 
-
+print("done")
